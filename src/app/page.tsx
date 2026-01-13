@@ -14,7 +14,9 @@ import { categories, authors } from '@/data/categories';
 import { ArrowRight, BookOpen, Users, Globe, AlertCircle } from 'lucide-react';
 
 export default function HomePage() {
-  const [featuredArticles, setFeaturedArticles] = useState<ProcessedArticleWithTheme[]>([]);
+  const [featuredArticles, setFeaturedArticles] = useState<
+    ProcessedArticleWithTheme[]
+  >([]);
   const [recentArticles, setRecentArticles] = useState<ProcessedArticle[]>([]);
   const [loading, setLoading] = useState(true);
   const [featuredLoading, setFeaturedLoading] = useState(true);
@@ -28,71 +30,84 @@ export default function HomePage() {
         setFeaturedLoading(true);
         setFeaturedError(null);
         setUsingFallback(false);
-        
+
         // 주요글 불러오기
         let featuredArticlesData: ProcessedArticleWithTheme[] = [];
         try {
-          featuredArticlesData = await featuredArticlesService.loadFeaturedArticles();
-          
+          featuredArticlesData =
+            await featuredArticlesService.loadFeaturedArticles();
+
           // isFeatured: true가 없는 게시글을 사용하고 있는지 확인
-          const hasExplicitlyFeatured = featuredArticlesData.some(article => article.isFeatured === true);
+          const hasExplicitlyFeatured = featuredArticlesData.some(
+            (article) => article.isFeatured === true
+          );
           if (!hasExplicitlyFeatured && featuredArticlesData.length > 0) {
             setUsingFallback(true);
           }
-          
+
           setFeaturedArticles(featuredArticlesData);
         } catch (error) {
           console.error('Failed to load featured articles:', error);
-          setFeaturedError(error instanceof Error ? error.message : 'Unknown error occurred');
+          setFeaturedError(
+            error instanceof Error ? error.message : 'Unknown error occurred'
+          );
           setUsingFallback(true);
-          
+
           // 추천 기사 서비스가 완전히 실패할 경우 자동 선택으로 대체
           featuredArticlesData = [];
         } finally {
           setFeaturedLoading(false);
         }
-        
+
         // 최근 글 조회
         const allPosts: any[] = [];
-        
+
         // 각 작가별로 최신 글 가져오기
         for (const author of authors) {
           try {
             const posts = await steemitService.getPostsByAuthor({
               author: author.username,
-              limit: 3 // 최근 글 조회 개수 (카테고리 별)
+              limit: 3, // 최근 글 조회 개수 (카테고리 별)
             });
-            
+
             allPosts.push(...posts);
           } catch (error) {
-            console.warn(`Failed to fetch posts for ${author.username}:`, error);
+            console.warn(
+              `Failed to fetch posts for ${author.username}:`,
+              error
+            );
             // 개별 작가 오류는 무시하고 계속 진행
           }
         }
-        
+
         // 날짜순으로 정렬
-        allPosts.sort((a, b) => 
-          new Date(b.created).getTime() - new Date(a.created).getTime()
+        allPosts.sort(
+          (a, b) =>
+            new Date(b.created).getTime() - new Date(a.created).getTime()
         );
 
         // 처리된 아티클로 변환
         const processedArticles = allPosts.map((post) => {
           // 작가의 주요 카테고리 찾기
-          const author = authors.find(a => a.username === post.author);
-          const categoryName = author?.primaryCategory ? 
-            categories.find(c => c.id === author.primaryCategory)?.name || '일반' : '일반';
-          
+          const author = authors.find((a) => a.username === post.author);
+          const categoryName = author?.primaryCategory
+            ? categories.find((c) => c.id === author.primaryCategory)?.name ||
+              '일반'
+            : '일반';
+
           return steemitService.processArticle(post, categoryName);
         });
 
-        // 주요글일 로드되지 않은 경우 3개의 기사 랜덤 
+        // 주요글일 로드되지 않은 경우 3개의 기사 랜덤
         if (featuredArticlesData.length === 0) {
-          const fallbackFeatured = processedArticles.slice(0, 3).map((article, index) => ({
-            ...article,
-            isFeatured: false, // Mark as fallback, not explicitly featured
-            featuredPriority: index + 1,
-            visualTheme: undefined
-          }));
+          const fallbackFeatured = processedArticles
+            .slice(0, 3)
+            .map((article, index) => ({
+              ...article,
+              isFeatured: false, // Mark as fallback, not explicitly featured
+              featuredPriority: index + 1,
+              visualTheme: undefined,
+            }));
           setFeaturedArticles(fallbackFeatured);
           setUsingFallback(true);
           setRecentArticles(processedArticles.slice(3, 9));
@@ -100,7 +115,6 @@ export default function HomePage() {
           // 최근 글 6개 로드
           setRecentArticles(processedArticles.slice(0, 6));
         }
-        
       } catch (error) {
         console.error('Failed to fetch articles:', error);
         setFeaturedError('글을 불러오는 중 오류가 발생했습니다.');
@@ -119,7 +133,7 @@ export default function HomePage() {
         <Container>
           <div className="max-w-4xl mx-auto text-center space-y-6">
             <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-              지정학과 세상읽기
+              우리 스스로 주인되는 세상
             </h1>
             <p className="text-xl md:text-2xl text-white/90 leading-relaxed">
               대한민국의 바람직한 미래를 위한 고민을 찾아서
@@ -130,13 +144,13 @@ export default function HomePage() {
               <p>정주영의 공약은 토지공개념 이었다.</p>
               <p>그동안 우리는 무엇을 했는가? 전진했는가? 아니면 후퇴했는가?</p>
             </div>
-            <div className="pt-8">
+            {/* <div className="pt-8">
               <Button asChild size="lg" variant="secondary">
                 <Link href="/category/domestic">
                   최신 글 읽기 <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-            </div>
+            </div> */}
           </div>
         </Container>
       </section>
@@ -179,7 +193,7 @@ export default function HomePage() {
       <Separator />
 
       {/* Featured Articles */}
-      {!loading && featuredArticles.length > 0 && (
+      {/* {!loading && featuredArticles.length > 0 && (
         <section>
           <Container>
             <div className="space-y-8">
@@ -194,10 +208,9 @@ export default function HomePage() {
                   )}
                 </div>
                 <p className="text-muted-foreground max-w-2xl mx-auto">
-                  {usingFallback 
+                  {usingFallback
                     ? '설정된 주요 글이 없어 최신 글을 자동으로 선별했습니다'
-                    : '최신 정치 분석과 국제 정세에 대한 깊이 있는 통찰'
-                  }
+                    : '최신 정치 분석과 국제 정세에 대한 깊이 있는 통찰'}
                 </p>
                 {featuredError && (
                   <div className="flex items-center justify-center space-x-2 text-sm text-destructive bg-destructive/10 rounded-lg p-3 max-w-md mx-auto">
@@ -206,11 +219,15 @@ export default function HomePage() {
                   </div>
                 )}
               </div>
-              
+
               {featuredLoading ? (
                 <div className="magazine-grid">
                   {[...Array(3)].map((_, i) => (
-                    <ArticleCard key={i} article={{} as ProcessedArticle} loading />
+                    <ArticleCard
+                      key={i}
+                      article={{} as ProcessedArticle}
+                      loading
+                    />
                   ))}
                 </div>
               ) : (
@@ -223,7 +240,7 @@ export default function HomePage() {
             </div>
           </Container>
         </section>
-      )}
+      )} */}
 
       <Separator />
 
@@ -240,7 +257,7 @@ export default function HomePage() {
                   </Link>
                 </Button>
               </div>
-              
+
               <div className="magazine-grid">
                 {recentArticles.map((article) => (
                   <ArticleCard key={article.id} article={article} />
@@ -261,7 +278,7 @@ export default function HomePage() {
                 관심 있는 주제별로 글을 찾아보세요
               </p>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {categories.map((category) => (
                 <Link
@@ -300,7 +317,11 @@ export default function HomePage() {
               </div>
               <div className="magazine-grid">
                 {[...Array(6)].map((_, i) => (
-                  <ArticleCard key={i} article={{} as ProcessedArticle} loading />
+                  <ArticleCard
+                    key={i}
+                    article={{} as ProcessedArticle}
+                    loading
+                  />
                 ))}
               </div>
             </div>

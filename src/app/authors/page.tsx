@@ -15,11 +15,10 @@ export default function AuthorsPage() {
           <div className="text-center space-y-4">
             <h1 className="text-4xl font-bold">작가 소개</h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              지정학과 세상읽기에 기여하는 전문가들을 만나보세요
+              우리 스스로 주인되는 세상에 기여하는 전문가들을 만나보세요
             </p>
           </div>
-
-          {/* Authors Grid */}
+          상{/* Authors Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {authors.map((author) => (
               <div
@@ -32,7 +31,9 @@ export default function AuthorsPage() {
                     <User className="h-8 w-8 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold">{author.displayName}</h3>
+                    <h3 className="text-xl font-semibold">
+                      {author.displayName}
+                    </h3>
                     <p className="text-muted-foreground">@{author.username}</p>
                   </div>
                 </div>
@@ -70,7 +71,7 @@ export default function AuthorsPage() {
                     </Link>
                   </Button>
                   <Button asChild variant="outline" size="sm">
-                    <a 
+                    <a
                       href={`https://steemit.com/@${author.username}`}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -82,15 +83,17 @@ export default function AuthorsPage() {
               </div>
             ))}
           </div>
-
           {/* Add More Authors CTA */}
           <div className="text-center py-12 bg-muted/50 rounded-lg">
-            <h2 className="text-2xl font-bold mb-4">더 많은 작가를 찾고 계신가요?</h2>
+            <h2 className="text-2xl font-bold mb-4">
+              더 많은 작가를 찾고 계신가요?
+            </h2>
             <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Steemit에서 다양한 정치 분석가와 지정학 전문가들의 글을 만나보실 수 있습니다.
+              Steemit에서 다양한 정치 분석가와 지정학 전문가들의 글을 만나보실
+              수 있습니다.
             </p>
             <Button asChild size="lg">
-              <a 
+              <a
                 href="https://steemit.com/trending/politics"
                 target="_blank"
                 rel="noopener noreferrer"

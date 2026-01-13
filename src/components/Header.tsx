@@ -16,7 +16,7 @@ export default function Header() {
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-2">
           <div className="text-2xl font-bold text-gradient">
-            지정학과 세상읽기
+            국가 민족 인민의 길
           </div>
         </Link>
 
@@ -52,7 +52,11 @@ export default function Header() {
           className="md:hidden"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
-          {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          {isMenuOpen ? (
+            <X className="h-5 w-5" />
+          ) : (
+            <Menu className="h-5 w-5" />
+          )}
         </Button>
       </div>
 
