@@ -132,17 +132,17 @@ export default function HomePage() {
       <section className="hero-gradient text-white py-20">
         <Container>
           <div className="max-w-4xl mx-auto text-center space-y-6">
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight">
+            <h3 className="text-4xl md:text-6xl font-bold leading-tight">
               우리 스스로 주인되는 세상
-            </h1>
+            </h3>
             <p className="text-xl md:text-2xl text-white/90 leading-relaxed">
-              대한민국의 미래를 위한 고민을 찾아서
+              지정학적 대격변의 시대, 우리의 미래를 위한 고민을 찾아서
             </p>
             <div className="space-y-4 text-lg text-white/80">
-              <p>무엇을 고민할 것인가?</p>
-              <p>노태우의 공약은 작전권전환과 200만호 건설이었다.</p>
+              <p>다음 세대를 위해 우리는 무엇을 준비해줄 것인가?</p>
+              <p>노태우의 공약은 전작권전환과 200만호 건설이었다.</p>
               <p>정주영의 공약은 토지공개념 이었다.</p>
-              <p>그동안 우리는 무엇을 했는가? 전진했는가? 후퇴했는가?</p>
+              <p>그동안 우리는 전진했는가? 후퇴했는가?</p>
             </div>
             {/* <div className="pt-8">
               <Button asChild size="lg" variant="secondary">
@@ -165,7 +165,7 @@ export default function HomePage() {
               </div>
               <h3 className="text-2xl font-bold">정치 분석</h3>
               <p className="text-muted-foreground">
-                깊이 있는 정치 상황 분석과 해석
+                올바른 정치를 위한 분석과 해석
               </p>
             </div>
             <div className="space-y-2">
@@ -174,7 +174,7 @@ export default function HomePage() {
               </div>
               <h3 className="text-2xl font-bold">국제 정세</h3>
               <p className="text-muted-foreground">
-                변화하는 국제정치 동향과 전망
+                정확한 국제정치 동향에 대한 전망과 해석
               </p>
             </div>
             <div className="space-y-2">
@@ -183,7 +183,7 @@ export default function HomePage() {
               </div>
               <h3 className="text-2xl font-bold">서민의 삶</h3>
               <p className="text-muted-foreground">
-                서민과 노동자를 위한 정치적 관점
+                서민과 노동자를 위한 정책적 대안 모색
               </p>
             </div>
           </div>
