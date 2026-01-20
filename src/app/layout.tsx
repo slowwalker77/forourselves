@@ -2,10 +2,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import Container from '@/components/ui/container';
-
-// ✅ GA4 삽입을 위한 Script
-import Script from 'next/script';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,26 +18,23 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko" className="scroll-smooth">
-      <body className={inter.className} suppressHydrationWarning={true}>
+      <body className={inter.className} suppressHydrationWarning>
         <div className="min-h-screen flex flex-col">
+          {/* 상단 헤더 영역 */}
           <Header />
+
+          {/* 메인 콘텐츠 영역 */}
           <main className="flex-1">{children}</main>
+
+          {/* 하단 푸터 영역 */}
           <Footer />
         </div>
 
-        {/* ✅ Google tag (gtag.js) - GA4 */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-M2XMR4D8DD"
-          strategy="afterInteractive"
-        />
-        <Script id="ga4-init" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-M2XMR4D8DD');
-          `}
-        </Script>
+        {/* ✅ Google Analytics 4 (GA4) 설정
+          새로 발급받으신 측정 ID인 G-MCKKB9BBMR를 적용했습니다.
+          @next/third-parties 라이브러리는 스크립트를 최적화해서 불러옵니다.
+        */}
+        <GoogleAnalytics gaId="G-MCKKB9BBMR" />
       </body>
     </html>
   );
